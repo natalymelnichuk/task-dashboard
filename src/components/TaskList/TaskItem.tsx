@@ -14,6 +14,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
     task,
     onStatusChange,
     onDelete,
+    onEdit,
 }) => {
     return (
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 mb-4 transition-all hover:shadow-md">
@@ -52,6 +53,13 @@ export const TaskItem: React.FC<TaskItemProps> = ({
                     className="px-3 py-2 bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white rounded-lg text-sm font-medium transition-colors cursor-pointer"
                 >
                     Delete
+                </button>
+
+                <button
+                    onClick={() => onEdit(task)}
+                    className="px-3 py-2 bg-blue-50 text-blue-600 hover:bg-rose-600 hover:text-white rounded-lg text-sm font-medium transition-colors cursor-pointer"
+                >
+                    Edit
                 </button>
             </div>
         </div>

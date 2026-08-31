@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
-import type { Task } from "../../types";
-import type { TaskFilterOptions, SortOption } from "../../types";
+import type { Task, TaskFilterOptions, SortOption, TaskStatus } from "../../types";
+import { TaskList } from "../TaskList/TaskList";
 
 const initialTasksList: Task[] = [
     {
@@ -45,7 +45,36 @@ export const Dashboard: React.FC = () => {
         order: 'desc',
     })
 
+    const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
+        setTasks(prevTasks => 
+            prevTasks.map(task => {
+                if (task.id === taskId) {
+                    return {...task, status: newStatus};
+                }
+
+                return task;
+            })
+        )
+    };
+
+    const handleDelete = (taskId: string) => {
+        setTasks(prevTasks => prevTasks.filter(task => 
+            task.id !== taskId
+        ));
+    };
+
+    const handleEdit = (task: Task) => {
+        console.log("Edit task:", task);
+    }
+
     return (
-        <div>Dashboard</div>
+        <div>
+            <TaskList 
+                tasks={tasks}
+                onStatusChange={handleStatusChange}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+            />
+        </div>
     )
 }
