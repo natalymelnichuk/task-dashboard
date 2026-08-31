@@ -12,6 +12,15 @@ export interface Task {
     createdAt: string;
 }
 
+
+export interface TaskItemProps {
+    task: Task;
+    onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
+    onDelete: (taskId: string) => void;
+    onEdit: (task: Task) => void;
+}
+
+
 export interface TaskFormData {
     title: string;
     description: string;
