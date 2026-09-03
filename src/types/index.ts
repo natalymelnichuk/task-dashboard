@@ -36,6 +36,12 @@ export interface TaskFormData {
     dueDate: string;
 }
 
+export interface TaskFormProps {
+    onSubmit: (formData: TaskFormData) => void;
+    initialData?: Task;
+    onCancel?: () => void;
+}
+
 
 export type TaskFilterOptions = {
     status: TaskStatus | 'all';

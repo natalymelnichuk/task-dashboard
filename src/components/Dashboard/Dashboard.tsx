@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
-import type { Task, TaskFilterOptions, SortOption, TaskStatus } from "../../types";
+import type { Task, TaskFilterOptions, SortOption, TaskStatus, TaskFormData } from "../../types";
 import { TaskList } from "../TaskList/TaskList";
+import { TaskForm } from "../TaskForm/TaskForm";
 
 const initialTasksList: Task[] = [
     {
@@ -35,15 +36,27 @@ const initialTasksList: Task[] = [
 
 export const Dashboard: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>(initialTasksList);
+
     const [filterOptions, setFilterOptions] = useState<TaskFilterOptions>({
         status: 'all',
         priority: 'all',
         search: ''
     });
+
     const [sortOptions, setSortOptions] = useState<SortOption>({
         field: 'dueDate',
         order: 'desc',
-    })
+    });
+
+    const handleCreateTask = (formData: TaskFormData) => {
+        const newTask: Task = {
+            ...formData,
+            id: Date.now().toString(),
+            createdAt: new Date().toISOString(),
+        };
+
+        setTasks((prevTasks) => [newTask, ...prevTasks]);
+    }
 
     const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
         setTasks(prevTasks => 
@@ -68,7 +81,9 @@ export const Dashboard: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className="space-y-6">
+            <TaskForm onSubmit={handleCreateTask} />
+
             <TaskList 
                 tasks={tasks}
                 onStatusChange={handleStatusChange}
@@ -77,4 +92,4 @@ export const Dashboard: React.FC = () => {
             />
         </div>
     )
-}
+} 

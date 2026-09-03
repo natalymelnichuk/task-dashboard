@@ -57,7 +57,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
 
                 <button
                     onClick={() => onEdit(task)}
-                    className="px-3 py-2 bg-blue-50 text-blue-600 hover:bg-rose-600 hover:text-white rounded-lg text-sm font-medium transition-colors cursor-pointer"
+                    className="px-3 py-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg text-sm font-medium transition-colors cursor-pointer"
                 >
                     Edit
                 </button>
