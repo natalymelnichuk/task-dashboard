@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import type { Task, TaskFilterOptions, SortOption, TaskStatus, TaskFormData } from "../../types";
 import { TaskList } from "../TaskList/TaskList";
 import { TaskForm } from "../TaskForm/TaskForm";
+import { TaskFilter } from "../TaskFilter/TaskFilter";
+import { filterTasks, sortTasks } from "../../utils/taskUtils";
 
 const initialTasksList: Task[] = [
     {
@@ -65,7 +67,6 @@ export const Dashboard: React.FC = () => {
                 if (task.id === taskId) {
                     return {...task, status: newStatus};
                 }
-
                 return task;
             })
         )
@@ -96,7 +97,12 @@ export const Dashboard: React.FC = () => {
         );
 
         setEditingTask(null);
-    }
+    };
+
+    const filteredTasks = filterTasks(tasks, filterOptions);
+    const processedTasks = sortTasks(filteredTasks, sortOptions);
+
+
     return (
         <div className="space-y-6">
             <TaskForm 
@@ -107,8 +113,15 @@ export const Dashboard: React.FC = () => {
                 
             />
 
+            <TaskFilter
+                filterOptions={filterOptions}
+                sortOptions={sortOptions}
+                onFilterChange={setFilterOptions}
+                onSortChange={setSortOptions}
+            />
+
             <TaskList 
-                tasks={tasks}
+                tasks={processedTasks}
                 onStatusChange={handleStatusChange}
                 onDelete={handleDelete}
                 onEdit={handleEdit}

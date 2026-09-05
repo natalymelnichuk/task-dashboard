@@ -49,7 +49,7 @@ export type TaskFilterOptions = {
     search: string,
 }
 
-export type SortBy = 'dueDate' | 'priority' | 'createdAt';
+export type SortBy = 'dueDate' | 'priority' | 'createdAt' | 'title';
 export type SortOrder = 'asc' | 'desc';
 
 export interface SortOption {
