@@ -36,6 +36,7 @@ const initialTasksList: Task[] = [
 
 export const Dashboard: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>(initialTasksList);
+    const [editingTask, setEditingTask] = useState<Task | null>(null);
 
     const [filterOptions, setFilterOptions] = useState<TaskFilterOptions>({
         status: 'all',
@@ -74,15 +75,37 @@ export const Dashboard: React.FC = () => {
         setTasks(prevTasks => prevTasks.filter(task => 
             task.id !== taskId
         ));
+
+        if (editingTask?.id === taskId) {
+            setEditingTask(null);
+        }
     };
 
     const handleEdit = (task: Task) => {
         console.log("Edit task:", task);
+        setEditingTask(task);
     }
 
+    const handleUpdateTask = (formData: TaskFormData) => {
+        if (!editingTask) return;
+
+        setTasks(prevTasks =>
+            prevTasks.map(task => 
+                task.id === editingTask.id ? { ...task, ...formData } : task
+            )
+        );
+
+        setEditingTask(null);
+    }
     return (
         <div className="space-y-6">
-            <TaskForm onSubmit={handleCreateTask} />
+            <TaskForm 
+                key={editingTask ? editingTask.id : 'create'}
+                initialData={editingTask || undefined}
+                onSubmit={editingTask ? handleUpdateTask : handleCreateTask}
+                onCancel={editingTask ? () => setEditingTask(null) : undefined}
+                
+            />
 
             <TaskList 
                 tasks={tasks}
