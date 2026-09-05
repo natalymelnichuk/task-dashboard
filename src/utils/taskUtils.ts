@@ -8,9 +8,13 @@ export const filterTasks = (
 ): Task[] => {
     return tasks.filter(task => {
 
+        const title = task.title?.toLowerCase() || '';
+        const description = task.description?.toLowerCase() || '';
+        const searchQuery = filters.search?.toLowerCase() || '';
+
         const matchesSearch = 
-            task.title.toLowerCase().includes(filters.search.toLowerCase()) || 
-            task.description.toLowerCase().includes(filters.search.toLowerCase());
+            title.includes(searchQuery) || 
+            description.includes(searchQuery);
 
         const matchesStatus = 
             filters.status === 'all' || task.status === filters.status;
