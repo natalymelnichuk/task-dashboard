@@ -37,7 +37,22 @@ const initialTasksList: Task[] = [
 ]
 
 export const Dashboard: React.FC = () => {
-    const [tasks, setTasks] = useState<Task[]>(initialTasksList);
+    const [tasks, setTasks] = useState<Task[]>(() => {
+        const savedTasks = localStorage.getItem('tasks');
+        if (savedTasks) {
+            try {
+                return JSON.parse(savedTasks) as Task[];
+            } catch (error) {
+                console.error("Failed to parse tasks from localStorage:", error);
+            }
+        }
+        return initialTasksList;
+    });
+
+    React.useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
+
     const [editingTask, setEditingTask] = useState<Task | null>(null);
 
     const [filterOptions, setFilterOptions] = useState<TaskFilterOptions>({
@@ -103,8 +118,36 @@ export const Dashboard: React.FC = () => {
     const processedTasks = sortTasks(filteredTasks, sortOptions);
 
 
+    const stats = {
+        total: tasks.length,
+        pending: tasks.filter(task => task.status === 'pending').length,
+        inProgress: tasks.filter(task => task.status === 'in-progress').length,
+        completed: tasks.filter(task => task.status === 'completed').length,
+    }
+
+    
     return (
         <div className="space-y-6">
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+                    <p className="text-sm font-medium text-gray-500">Total Tasks</p>
+                    <p className="text-2xl font-bold text-gray-800">{stats.total}</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+                    <p className="text-sm font-medium text-gray-500">Pending</p>
+                    <p className="text-2xl font-bold text-amber-600">{stats.pending}</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+                    <p className="text-sm font-medium text-gray-500">In Progress</p>
+                    <p className="text-2xl font-bold text-blue-600">{stats.inProgress}</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+                    <p className="text-sm font-medium text-gray-500">Completed</p>
+                    <p className="text-2xl font-bold text-emerald-600">{stats.completed}</p>
+                </div>
+            </div>
+
             <TaskForm 
                 key={editingTask ? editingTask.id : 'create'}
                 initialData={editingTask || undefined}
