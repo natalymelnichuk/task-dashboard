@@ -11,7 +11,7 @@ export const TaskList: React.FC<TaskListProps> = ({
 }) => {
 
     return (
-        <div>
+        <div className="space-y-4">
             {tasks.length === 0 ? (
                 <p className="text-slate-500 text-base font-medium p-12 bg-slate-50 rounded-xl border border-dashed border-slate-300">No tasks were found.</p>
             ) : (

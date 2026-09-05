@@ -25,8 +25,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     }
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
                 {initialData ? "Edit Task" : "Create New Task"}
             </h3>
 
@@ -38,7 +38,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                         type="text"
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full p-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter task title..."
                         required
                     />
@@ -50,7 +50,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                     <textarea
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full p-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                         rows={3}
                         placeholder="Enter task description..."
                     />
@@ -63,7 +63,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                         <select
                         value={formData.priority}
                         onChange={(e) => setFormData({ ...formData, priority: e.target.value as TaskPriority})}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full p-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -76,7 +76,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                         <select
                         value={formData.status}
                         onChange={(e) => setFormData({ ...formData, status: e.target.value as TaskStatus })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full p-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="pending">Pending</option>
                             <option value="in-progress">In Progress</option>
@@ -90,7 +90,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                         type="date"
                         value={formData.dueDate}
                         onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full p-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                 </div>

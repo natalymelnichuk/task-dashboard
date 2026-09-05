@@ -125,24 +125,24 @@ export const Dashboard: React.FC = () => {
         completed: tasks.filter(task => task.status === 'completed').length,
     }
 
-    
+
     return (
         <div className="space-y-6">
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
-                    <p className="text-sm font-medium text-gray-500">Total Tasks</p>
-                    <p className="text-2xl font-bold text-gray-800">{stats.total}</p>
+                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm text-center">
+                    <p className="text-sm font-medium text-gray-500 dark:text-slate-400">Total Tasks</p>
+                    <p className="text-2xl font-bold text-gray-800 dark:text-white">{stats.total}</p>
                 </div>
-                <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm text-center">
                     <p className="text-sm font-medium text-gray-500">Pending</p>
                     <p className="text-2xl font-bold text-amber-600">{stats.pending}</p>
                 </div>
-                <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm text-center">
                     <p className="text-sm font-medium text-gray-500">In Progress</p>
                     <p className="text-2xl font-bold text-blue-600">{stats.inProgress}</p>
                 </div>
-                <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm text-center">
+                <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm text-center">
                     <p className="text-sm font-medium text-gray-500">Completed</p>
                     <p className="text-2xl font-bold text-emerald-600">{stats.completed}</p>
                 </div>
