@@ -3,6 +3,8 @@
 
 A modern, responsive Task Tracker Single Page Application (SPA) built with React, TypeScript, and Tailwind CSS. The app features state management, declarative component architecture, a dynamic dark/light theme toggle, custom utility-based filtering and sorting, real-time metrics, and persistent storage via `localStorage`.
 
+**Live Demo:** https://natalymelnichuk.github.io/task-dashboard/
+
 ## Features
 
 * **Full CRUD Operations**: Create, read, edit, and delete tasks with instant UI updates.
