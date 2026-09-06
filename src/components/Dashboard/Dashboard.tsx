@@ -6,6 +6,7 @@ import { TaskForm } from "../TaskForm/TaskForm";
 import { TaskFilter } from "../TaskFilter/TaskFilter";
 import { filterTasks, sortTasks } from "../../utils/taskUtils";
 
+
 const initialTasksList: Task[] = [
     {
         id: '1',
@@ -114,16 +115,44 @@ export const Dashboard: React.FC = () => {
         setEditingTask(null);
     };
 
-    const filteredTasks = filterTasks(tasks, filterOptions);
-    const processedTasks = sortTasks(filteredTasks, sortOptions);
-
-
     const stats = {
         total: tasks.length,
         pending: tasks.filter(task => task.status === 'pending').length,
         inProgress: tasks.filter(task => task.status === 'in-progress').length,
         completed: tasks.filter(task => task.status === 'completed').length,
     }
+
+    const [isCustomOrder, setIsCustomOrder] = useState<boolean>(false);
+
+    const handleReorderTasks = (reorderedTasks: Task[]) => {
+
+        setIsCustomOrder(true);
+
+        setTasks((prevTasks) => {
+            const updated = [...prevTasks];
+
+            const reorderedIds = new Set(reorderedTasks.map(task => task.id));
+
+            const firstIndex = updated.findIndex(task => reorderedIds.has(task.id));
+
+            const remaining = updated.filter(task => !reorderedIds.has(task.id));
+
+            const insertAt = firstIndex !== -1 ? firstIndex : 0;
+            remaining.splice(insertAt, 0, ...reorderedTasks);
+
+            return remaining;
+        });
+        localStorage.setItem("tasks", JSON.stringify(reorderedTasks));
+    };
+
+    const handleSortChange = (newSortOptions: SortOption) => {
+        setIsCustomOrder(false); 
+        setSortOptions(newSortOptions);
+    };
+
+    const filteredTasks = filterTasks(tasks, filterOptions);
+
+    const processedTasks = isCustomOrder ? filteredTasks : sortTasks(filteredTasks, sortOptions);
 
 
     return (
@@ -160,7 +189,7 @@ export const Dashboard: React.FC = () => {
                 filterOptions={filterOptions}
                 sortOptions={sortOptions}
                 onFilterChange={setFilterOptions}
-                onSortChange={setSortOptions}
+                onSortChange={handleSortChange}
             />
 
             <TaskList 
@@ -168,6 +197,7 @@ export const Dashboard: React.FC = () => {
                 onStatusChange={handleStatusChange}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                onReorderTasks={handleReorderTasks}
             />
         </div>
     )

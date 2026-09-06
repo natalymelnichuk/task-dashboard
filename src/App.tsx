@@ -18,15 +18,18 @@ export const App: React.FC = () => {
         setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
     };  
 
+    
+
     return (
         <div className={`${theme === 'dark' ? 'dark bg-slate-900 text-white' : 'bg-slate-100 text-slate-900'} min-h-screen p-6 md:p-10 transition-colors duration-200`}>
             <div className="max-w-4xl mx-auto">
                 <header className="mb-8 flex justify-between items-center">
-                    <h1 className="text-3xl font-bold">Task Dashboard</h1>
-                    <p className="text-slate-500 text-sm mt-1">
-                        Manage yout tasks
-                    </p>
-
+                    <div>   
+                        <h1 className="text-3xl font-bold">Task Dashboard</h1>
+                        <p className="text-slate-500 text-sm mt-1">
+                            Manage your tasks
+                        </p>
+                    </div>
                     <button
                         onClick={toggleTheme}
                         className={`px-4 py-2 rounded-lg font-medium border text-sm transition-colors ${
