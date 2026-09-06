@@ -8,18 +8,22 @@ A modern, responsive Task Tracker Single Page Application (SPA) built with React
 ## Features
 
 * **Full CRUD Operations**: Create, read, edit, and delete tasks with instant UI updates.
+* **Interactive Drag-and-Drop Reordering**: Smooth task reordering via `@hello-pangea/dnd` with seamless state synchronization.
 * **Task Dashboard**: Live statistics counter tracking Total, Pending, In-Progress, and Completed tasks.
 * **Advanced Filtering & Sorting**: Filter tasks by status and priority, search by keyword, and sort by due date, priority, title, or creation date.
-* **Dark / Light Mode**: Seamless theme switching persisted across sessions.
+* **Fluid UI & Animations**: State changes, task additions, and deletions feature layout animations powered by Motion React.
+* **Dark / Light Mode**: Seamless theme switching persisted across sessions and applied globally.
 * **Data Persistence**: Automatic syncing with browser `localStorage`.
-* **Type Safety**: Built with strict TypeScript interfaces for robust state and prop handling.
+* **Type Safety**: Built with strict TypeScript interfaces for robust state, prop, and event handling.
 
 
 ## Tech Stack
 
-* **Frontend**: React
+* **Frontend Framework**: React
 * **Language**: TypeScript
 * **Styling**: Tailwind CSS
+* **Drag-and-Drop**: `@hello-pangea/dnd`
+* **Animations**: `motion/react` 
 * **Build Tool**: Vite
 
 
@@ -34,13 +38,17 @@ A modern, responsive Task Tracker Single Page Application (SPA) built with React
 
 ## 2. Challenges Encountered & Solutions
 
-* **TypeScript Union Type Incompatibilities**: 
-  * *Challenge*: Initial type mismatches occurred when passing string literal union types (`TaskStatus`, `TaskPriority`) from native select event targets.
-  * *Solution*: Implemented explicit type assertions (`as TaskStatus | 'all'`) on change event handlers and unified shared option types across utility functions.
+* **Drag-and-Drop State Reversion vs. Automated Sorting**: 
+  * *Challenge*: Reordering tasks via Drag and Drop caused items to temporarily snap back to their original positions due to conflicting automated sorting functions (`sortTasks`).
+  * *Solution*: Introduced a `isCustomOrder` flag (or manual sort reset) within `Dashboard.tsx` to automatically yield precedence to custom drag-and-drop ordering whenever a user explicitly drags a task.
+
+* **TypeScript Type Imports for External Libraries**: 
+  * *Challenge*: Importing library types like `DropResult` from `@hello-pangea/dnd` triggered module syntax errors under isolated module compilation rules.
+  * *Solution*: Updated type declarations to explicit type-only imports (`import type { DropResult }`) and extended `TaskListProps` cleanly using interface inheritance (`interface ExtendedTaskListProps extends TaskListProps`).
 
 * **DOM Syncing in Dark Mode**:
   * *Challenge*: Theme classes applied only to container elements caused child components (cards, forms, inputs) to retain hardcoded light-mode background styling.
-  * *Solution*: Applied the `dark` class directly to `document.documentElement` inside a `useEffect` hook and ensured `darkMode: 'class'` was explicitly configured in `tailwind.config.js`.
+  * *Solution*: Applied the `dark` class directly to `document.documentElement` inside a `useEffect` hook in `App.tsx` and ensured smooth CSS transitions across background color swaps.
 
 
 ## 3. Component Composition & State Management
